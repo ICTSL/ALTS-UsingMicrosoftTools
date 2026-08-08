@@ -100,6 +100,29 @@ Flow Diagram
                      ├──► 7. Convert file (OneDrive - Excel to PDF)
                      ├──► 8. Create file (Save PDF to /Sent_Invoices)
                      └──► 9. Send an email (V2) (Attach PDF & send to Client)
+                     ``` OR ```
+[ Recurrence / Scheduled Trigger ]
+               │
+               ▼
+   [ List rows present in a table ]  <-- (ALTS_TUTORIAL1.xlsx)
+               │
+               ▼
+         [ For each ]  (Concurrency = 1)
+               │
+               ▼
+         [ Condition ]  <-- Evaluates Lifecycle Threshold (-1 to 2 days)
+         │           │
+      (False)     (True)
+         │           │
+    [ Do Nothing ]   ├──► 1. Get a row (Read Invoice Counter)
+                     ├──► 2. Compose - Calculate Next Invoice
+                     ├──► 3. Compose - Format Invoice String
+                     ├──► 4. Update a row (Populate Template & Increment Counter)
+                     ├──► 5. Run script (ForceSave)
+                     ├──► 6. Delay (5 Seconds Buffer)
+                     ├──► 7. Convert file (OneDrive - Excel to PDF)
+                     ├──► 8. Create file (Save PDF to /Sent_Invoices)
+                     └──► 9. Send an email (V2) (Attach PDF & send to Client)
                      
 
 📋 Step 3: Action-by-Action Flow Configuration
