@@ -78,6 +78,7 @@ Save the script as ForceSave.
 
 🔄 Step 2: Complete Power Automate Flow Blueprint
 Flow Diagram
+```
 [ Recurrence / Scheduled Trigger ]
                │
                ▼
@@ -100,6 +101,7 @@ Flow Diagram
                      ├──► 7. Convert file (OneDrive - Excel to PDF)
                      ├──► 8. Create file (Save PDF to /Sent_Invoices)
                      └──► 9. Send an email (V2) (Attach PDF & send to Client)
+```
                      
 
 📋 Step 3: Action-by-Action Flow Configuration
