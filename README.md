@@ -97,7 +97,7 @@ Flow Diagram
                      ├──► 3. Compose - Format Invoice String
                      ├──► 4. Update a row (Populate Template & Increment Counter)
                      ├──► 5. Run script (ForceSave)
-                     ├──► 6. Delay (5 Seconds Buffer)
+                     ├──► 6. Delay (21 Secondsor more Buffer)
                      ├──► 7. Convert file (OneDrive - Excel to PDF)
                      ├──► 8. Create file (Save PDF to /Sent_Invoices)
                      └──► 9. Send an email (V2) (Attach PDF & send to Client)
@@ -133,7 +133,8 @@ Expression: add(int(outputs('Get_a_row')?['body/Bill_No']), 1)
 3. Format Invoice ID String
 Action: Compose (Rename: Compose-Format Invoice String)
 
-Expression: concat('ITS_2026_', outputs('Compose-Calculate_Next_Invoice'))
+```Expression: concat('ITS_2026_', outputs('Compose-Calculate_Next_Invoice')) modified below``` 
+concat('ITS_', utcNow('yyyy'), '_', outputs('Compose-Calculate_Next_Invoice'))
 
 4. Update Invoice Template
 Action: Update a row (Excel Online)
