@@ -1,7 +1,7 @@
 # Power Automate Invoice Generator - Version 2.0.0 (`Testt Copy1`)
 
 ## 📌 Overview
-Version 2 enhances the automated invoicing workflow by generating and dispatching invoices populated with single-service line items per client based on renewal criteria.
+Version 2 enhances the automated invoicing workflow by generating and dispatching unique client-specific invoices populated with single-service line items per client based on renewal criteria. The previous version sends the same invoice to all clients.
 
 ---
 
