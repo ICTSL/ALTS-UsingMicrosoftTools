@@ -68,8 +68,8 @@ ALTS-UsingMicrosoftTools/
 
 ### Step 1: Excel Data Setup[cite: 1]
 Ensure your master Excel file (`ALTS_VERSION3.xlsx`) contains two structured tables[cite: 1]:
-1. **`ClientTable`**: Columns: `Client`, `AddressLine1`, `AddressLine2`, `AddressLine3`, `Bill_No`, `Invoice_No`, `Date`[cite: 1].
-2. **`ServiceTable`**: Columns: `Client`, `Description`, `Qty`, `UnitPrice`, `Amount`[cite: 1].
+* **`ClientTable`**: Columns: `Client`, `AddressLine1`, `AddressLine2`, `AddressLine3`, `Bill_No`, `Invoice_No`, `Date`[cite: 1].
+* **`ServiceTable`**: Columns: `Client`, `Description`, `Qty`, `UnitPrice`, `Amount`[cite: 1].
 
 ### Step 2: Import Power Automate Flow Package[cite: 1]
 1. Download `ALTS-v4/Send_Multi-Service_Invoices_v4.zip` from this repository[cite: 1].
@@ -87,6 +87,32 @@ To prevent duplicate bill numbers upon each flow run[cite: 1]:
    - **Map:** `int(item()?['Bill_No'])`[cite: 1]
 3. **Initialize varBillNo**[cite: 1]:
    - **Value Expression:** `max(body('Select'))`[cite: 1]
+
+### Step 4: Power Automate Workflow Architecture & Logic[cite: 1]
+
+#### 1. Data Retrieval & Initialization[cite: 1]
+* **Recurrence / Manual Trigger**[cite: 1]
+* **List rows present in ClientTable** (`ALTS_VERSION3.xlsx`)[cite: 1]
+* **List rows present in ServiceTable** (`ALTS_VERSION3.xlsx`)[cite: 1]
+* **Select (`Select - Extract Bill Numbers`)**: Extracts array of all `Bill_No` integers using `@int(item()?['Bill_No'])`[cite: 1].
+* **Initialize variable (`varBillNo`)**: Sets global counter base using `@max(body('Select'))`[cite: 1].
+
+#### 2. HTML Generation & Itemization Loop[cite: 1]
+* **Get file content (`Get HTML Template`)**: Loads `/ALTS-v4/invoice_template.html`[cite: 1].
+* **Apply to each (`For Each Client`)**: (Concurrency Control = 1)[cite: 1]
+  * **Increment variable (`varBillNo`)**: Increments by `1` per client iteration[cite: 1].
+  * **Filter array (`Filter Services for Current Client`)**: Filters `ServiceTable` matching current `Client`[cite: 1].
+  * **Select (`Build HTML Table Rows`)**: Maps filtered services to `<tr><td>...</td></tr>` strings[cite: 1].
+  * **Compose (`Join Table Rows`)**: Applies `join(body('...'), '')`[cite: 1].
+  * **Compose (`Replace Placeholders in HTML`)**: Replaces placeholders (`{{ClientName}}`, `{{BillNo}}`, `{{ServiceRows}}`)[cite: 1]. Replaces raw Excel serial integer dates via `addDays('1899-12-30', int(...), 'dd-MMM-yyyy')`[cite: 1].
+
+#### 3. Conversion, Archiving & Output[cite: 1]
+* **Create file (`Create Temp HTML`)**: Writes temporary file to `/ALTS-v4/`[cite: 1].
+* **Convert file (`Convert HTML to PDF`)**: Leverages OneDrive conversion engine[cite: 1].
+* **Create file (`Save PDF Archive`)**: Writes PDF to `/ALTS-v4/Sent_Invoices/`[cite: 1].
+* **Send an email (V2)**: Sends dynamic Outlook email with PDF attachment to target client[cite: 1].
+* **Update a row 1 (`Excel Writeback`)**: Persists updated `Bill_No` to `ClientTable` in `ALTS_VERSION3.xlsx`[cite: 1].
+* **Delete file (`Clean Up Temp HTML`)**: Purges temporary `.html` file from OneDrive[cite: 1].
 
 ---
 
