@@ -10,6 +10,10 @@ An end-to-end cloud solution built with **Microsoft Power Automate**, **Excel On
 The **Automated Lifecycle Tracking System (ALTS)** monitors client service lifecycle dates, evaluates renewal thresholds, dynamically populates and increments custom invoice templates, converts generated bills to PDF, archives sent copies to OneDrive, and dispatches automated billing emails[cite: 1].
 
 ---
+## Version Releases
+
+* **ALTS-v5 (Latest / Feature Release):** Features a 5-column itemized HTML invoice table (`DESCRIPTION`, `QTY`, `UNIT PRICE`, `DISCOUNT`, `AMOUNT`). Incorporates null-safe string handling for empty Excel discount cells and automatically computes net line totals and overall subtotal.
+* **ALTS-v4 (Standard Baseline):** Standard 4-column itemized billing (`DESCRIPTION`, `QTY`, `UNIT PRICE`, `AMOUNT`) designed for flat-rate billing without explicit per-row discount columns.
 
 ## 🌟 What's New in Version 4.0 (`ALTS-v4`)[cite: 1]
 
